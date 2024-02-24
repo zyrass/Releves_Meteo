@@ -2,10 +2,11 @@
 {
   internal class Program
   {
+
+    static string[] lignes = File.ReadAllLines("meteoParis.csv");
+
     static void AfficherListe()
     {
-      string[] lignes = File.ReadAllLines("meteoParis.csv");
-
       float sommeTemp = 0f;
       for (int i = 1; i < lignes.Length; i++)
       {
@@ -25,9 +26,54 @@
       }
       Console.WriteLine($"\nT° moyenne globale : {sommeTemp / (lignes.Length - 1)}");
     }
+
+    static void AfficherTableau()
+    {
+      float sommeTemperature = 0f;
+
+
+
+      for (int i = 0; i < lignes.Length; i++)
+      {
+
+        string[] infoLigne = lignes[i].Split(';');
+        string entete;
+        string ligne;
+
+        if (i == 0)
+        {
+          entete = $"""
+           + -------- + -------- + -------- + ---------------- + ------------ +
+           |   Mois   |  T° min  |  T° max  |  Soleil (durée)  |  Pluie (mm)  |
+           + -------- + -------- + -------- + ---------------- + ------------ +
+           """;
+          Console.WriteLine(entete);
+        }
+        else if (i != 0 )
+        {
+          ligne = $"""
+           | {infoLigne[0],3}/{infoLigne[1]} | {infoLigne[2],8:N1} | {infoLigne[3],8:N1} | {infoLigne[6],16} | {infoLigne[7],12:N1} |
+           """;
+          Console.WriteLine(ligne);
+        }
+
+
+
+        if (float.TryParse(infoLigne[4], out float temp)) sommeTemperature += temp;
+
+      }
+
+      Console.WriteLine($"\nLa température moyenne est de : {sommeTemperature / (lignes.Length - 1)}°");
+
+    }
+
     static void Main(string[] args)
     {
-      AfficherListe();
+      // Afficher la liste météorologique en liste
+      // AfficherListe();
+
+      // Afficher la liste météorologique en tableau
+      AfficherTableau();
     }
   }
 }
