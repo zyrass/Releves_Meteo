@@ -31,8 +31,6 @@
     {
       float sommeTemperature = 0f;
 
-
-
       for (int i = 0; i < lignes.Length; i++)
       {
 
@@ -49,15 +47,18 @@
            """;
           Console.WriteLine(entete);
         }
-        else if (i != 0 )
+        else if (i != 0)
         {
           ligne = $"""
            | {infoLigne[0],3}/{infoLigne[1]} | {infoLigne[2],8:N1} | {infoLigne[3],8:N1} | {infoLigne[6],16} | {infoLigne[7],12:N1} |
            """;
           Console.WriteLine(ligne);
+
+          if (i == lignes.Length - 1)
+          {
+            Console.WriteLine("+ -------- + -------- + -------- + ---------------- + ------------ +");
+          }
         }
-
-
 
         if (float.TryParse(infoLigne[4], out float temp)) sommeTemperature += temp;
 
